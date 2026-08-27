@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شنو أشتري؟</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">🛍️ شنو أشتري؟</div>
+
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#products">المنتجات</a>
+        <a href="#ai">المساعد الذكي</a>
+    </nav>
+</header>
+
+
+<main>
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <span class="badge">🤖 مساعد شراء ذكي</span>
+
+        <h1>
+            محتار شنو تشتري؟
+            <br>
+            <span>خلّي الذكاء يساعدك.</span>
+        </h1>
+
+        <p>
+            احچيلي عن ميزانيتك واحتياجك،
+            وأنا أساعدك تختار المنتج الأنسب.
+        </p>
+
+        <a href="#ai" class="hero-button">
+            🤖 اسأل المساعد
+        </a>
+
+    </div>
+
+</section>
+
+
+<section id="ai" class="ai-section">
+
+    <div class="section-title">
+        <span>🤖 الذكاء الاصطناعي</span>
+        <h2>احچي ويا مساعد الشراء</h2>
+        <p>اسأله عن أي منتج أو مقارنة أو ميزانية.</p>
+    </div>
+
+    <div class="chat-box">
+
+        <div id="messages" class="messages">
+
+            <div class="message ai-message">
+                <div class="avatar">🤖</div>
+
+                <div>
+                    <strong>مساعد الشراء</strong>
+                    <p>
+                        هلا بيك 👋
+                        شنو تريد تشتري؟ وشنو ميزانيتك؟
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="suggestions">
+
+            <button onclick="askSuggestion('أريد أفضل موبايل بميزانية 500 ألف')">
+                📱 أفضل موبايل بـ500 ألف
+            </button>
+
+            <button onclick="askSuggestion('أريد لابتوب للألعاب')">
+                💻 لابتوب للألعاب
+            </button>
+
+            <button onclick="askSuggestion('أريد سماعة للـ PS5')">
+                🎧 سماعة للـ PS5
+            </button>
+
+        </div>
+
+
+        <div class="input-area">
+
+            <input
+                id="userInput"
+                type="text"
+                placeholder="اكتب سؤالك هنا..."
+                onkeydown="handleEnter(event)"
+            >
+
+            <button class="mic-button" onclick="startVoice()">
+                🎤
+            </button>
+
+            <button class="send-button" onclick="sendMessage()">
+                إرسال
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="products" class="products-section">
+
+    <div class="section-title">
+        <span>🔥 المنتجات</span>
+        <h2>منتجات مقترحة</h2>
+        <p>اختيارات مرتبة حتى تساعدك تقرر.</p>
+    </div>
+
+    <div class="categories">
+
+        <button class="category active" onclick="filterProducts('all', this)">
+            الكل
+        </button>
+
+        <button class="category" onclick="filterProducts('phone', this)">
+            📱 موبايلات
+        </button>
+
+        <button class="category" onclick="filterProducts('laptop', this)">
+            💻 لابتوبات
+        </button>
+
+        <button class="category" onclick="filterProducts('gaming', this)">
+            🎮 Gaming
+        </button>
+
+        <button class="category" onclick="filterProducts('audio', this)">
+            🎧 سماعات
+        </button>
+
+    </div>
+
+
+    <div id="productsGrid" class="products-grid"></div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">🛍️ شنو أشتري؟</div>
+
+    <p>
+        ساعدنا نخليك تشتري الصح.
+    </p>
+
+    <p class="copyright">
+        © 2026 شنو أشتري؟
+    </p>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
