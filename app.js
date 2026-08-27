@@ -4,7 +4,7 @@ const products = [
 name:"iPhone 15",
 category:"phone",
 price:850000,
-use:["camera","study"],
+uses:["camera","study"],
 rating:9.2,
 icon:"📱"
 },
@@ -13,7 +13,7 @@ icon:"📱"
 name:"Samsung Galaxy S24",
 category:"phone",
 price:780000,
-use:["camera","battery"],
+uses:["camera","battery"],
 rating:9.3,
 icon:"📱"
 },
@@ -22,7 +22,7 @@ icon:"📱"
 name:"Xiaomi 14",
 category:"phone",
 price:650000,
-use:["gaming","battery"],
+uses:["gaming","battery"],
 rating:8.9,
 icon:"📱"
 },
@@ -32,7 +32,7 @@ icon:"📱"
 name:"Lenovo Legion",
 category:"laptop",
 price:1250000,
-use:["gaming","study"],
+uses:["gaming","study"],
 rating:9.1,
 icon:"💻"
 },
@@ -42,7 +42,7 @@ icon:"💻"
 name:"ASUS ROG",
 category:"laptop",
 price:1450000,
-use:["gaming"],
+uses:["gaming"],
 rating:9.5,
 icon:"💻"
 },
@@ -52,7 +52,7 @@ icon:"💻"
 name:"PlayStation 5",
 category:"gaming",
 price:850000,
-use:["gaming"],
+uses:["gaming"],
 rating:9.6,
 icon:"🎮"
 },
@@ -62,7 +62,7 @@ icon:"🎮"
 name:"Sony WH-1000XM5",
 category:"audio",
 price:350000,
-use:["music","study"],
+uses:["study"],
 rating:9.4,
 icon:"🎧"
 }
@@ -75,9 +75,7 @@ icon:"🎧"
 
 function showProducts(){
 
-
-const box=document.getElementById("productsBox");
-
+const box = document.getElementById("productsBox");
 
 box.innerHTML="";
 
@@ -87,40 +85,29 @@ products.forEach(product=>{
 
 box.innerHTML += `
 
-
 <div class="card">
 
-
 <div class="image">
-
 ${product.icon}
-
 </div>
 
 
 <h3>
-
 ${product.name}
-
 </h3>
 
 
 <p class="price">
-
 ${product.price.toLocaleString()} د.ع
-
 </p>
 
 
 <p class="rating">
-
 ⭐ ${product.rating}/10
-
 </p>
 
 
 </div>
-
 
 `;
 
@@ -143,7 +130,7 @@ document.getElementById("category").value;
 
 
 const budget =
-Number(document.getElementById("budget").value)*1000;
+Number(document.getElementById("budget").value) * 1000;
 
 
 const usage =
@@ -151,29 +138,24 @@ document.getElementById("usage").value;
 
 
 
-let possible = products.filter(product=>{
+let choices = products.filter(product=>{
 
-
-return product.category===category
+return product.category === category
 && product.price <= budget;
 
-
 });
 
 
 
 
-if(possible.length===0){
 
+if(choices.length === 0){
 
-possible = products.filter(product=>{
+choices = products.filter(product=>{
 
-
-return product.category===category;
-
+return product.category === category;
 
 });
-
 
 }
 
@@ -181,21 +163,24 @@ return product.category===category;
 
 
 
-let best = possible[0];
+choices.sort((a,b)=>{
 
 
-
-possible.forEach(product=>{
-
-
-if(product.use.includes(usage)
-&& product.rating > best.rating){
+let scoreA = a.rating;
+let scoreB = b.rating;
 
 
-best=product;
-
-
+if(a.uses.includes(usage)){
+scoreA += 2;
 }
+
+
+if(b.uses.includes(usage)){
+scoreB += 2;
+}
+
+
+return scoreB-scoreA;
 
 
 });
@@ -204,21 +189,29 @@ best=product;
 
 
 
+let best = choices[0];
 
-document.getElementById("result").innerHTML=`
 
-🏆 اختيارنا إلك:
+
+
+
+document.getElementById("result").innerHTML = `
+
+
+🏆 <strong>اختيارنا إلك:</strong>
 
 <br><br>
 
+
+${best.icon}
+
 <strong>
-
 ${best.name}
-
 </strong>
 
 
-<br>
+<br><br>
+
 
 💰 السعر:
 ${best.price.toLocaleString()} د.ع
@@ -226,14 +219,17 @@ ${best.price.toLocaleString()} د.ع
 
 <br>
 
+
 ⭐ التقييم:
 ${best.rating}/10
 
 
 <br><br>
 
-السبب:
-هذا المنتج مناسب لاستخدامك وميزانيتك.
+
+✅ السبب:
+مناسب لميزانيتك واستخدامك.
+
 
 `;
 
