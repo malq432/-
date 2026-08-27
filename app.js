@@ -1,263 +1,248 @@
 const products = [
 
-    {
-        name: "iPhone 15",
-        category: "phone",
-        price: "850,000 د.ع",
-        rating: "9.2",
-        icon: "📱"
-    },
+{
+name:"iPhone 15",
+category:"phone",
+price:850000,
+use:["camera","study"],
+rating:9.2,
+icon:"📱"
+},
 
-    {
-        name: "Samsung Galaxy S24",
-        category: "phone",
-        price: "780,000 د.ع",
-        rating: "9.3",
-        icon: "📱"
-    },
+{
+name:"Samsung Galaxy S24",
+category:"phone",
+price:780000,
+use:["camera","battery"],
+rating:9.3,
+icon:"📱"
+},
 
-    {
-        name: "Xiaomi 14",
-        category: "phone",
-        price: "650,000 د.ع",
-        rating: "8.9",
-        icon: "📱"
-    },
+{
+name:"Xiaomi 14",
+category:"phone",
+price:650000,
+use:["gaming","battery"],
+rating:8.9,
+icon:"📱"
+},
 
-    {
-        name: "ASUS ROG Laptop",
-        category: "laptop",
-        price: "1,450,000 د.ع",
-        rating: "9.5",
-        icon: "💻"
-    },
 
-    {
-        name: "Lenovo Legion",
-        category: "laptop",
-        price: "1,250,000 د.ع",
-        rating: "9.1",
-        icon: "💻"
-    },
+{
+name:"Lenovo Legion",
+category:"laptop",
+price:1250000,
+use:["gaming","study"],
+rating:9.1,
+icon:"💻"
+},
 
-    {
-        name: "PlayStation 5",
-        category: "gaming",
-        price: "850,000 د.ع",
-        rating: "9.6",
-        icon: "🎮"
-    },
 
-    {
-        name: "Gaming Headset",
-        category: "audio",
-        price: "120,000 د.ع",
-        rating: "8.7",
-        icon: "🎧"
-    },
+{
+name:"ASUS ROG",
+category:"laptop",
+price:1450000,
+use:["gaming"],
+rating:9.5,
+icon:"💻"
+},
 
-    {
-        name: "Sony WH-1000XM5",
-        category: "audio",
-        price: "350,000 د.ع",
-        rating: "9.4",
-        icon: "🎧"
-    }
+
+{
+name:"PlayStation 5",
+category:"gaming",
+price:850000,
+use:["gaming"],
+rating:9.6,
+icon:"🎮"
+},
+
+
+{
+name:"Sony WH-1000XM5",
+category:"audio",
+price:350000,
+use:["music","study"],
+rating:9.4,
+icon:"🎧"
+}
 
 ];
 
 
-function displayProducts(list) {
 
-    const grid = document.getElementById("productsGrid");
 
-    grid.innerHTML = "";
 
-    list.forEach(product => {
+function showProducts(){
 
-        const card = document.createElement("div");
 
-        card.className = "product-card";
+const box=document.getElementById("productsBox");
 
-        card.innerHTML = `
 
-            <div class="product-image">
-                ${product.icon}
-            </div>
+box.innerHTML="";
 
-            <div class="product-name">
-                ${product.name}
-            </div>
 
-            <div class="product-price">
-                ${product.price}
-            </div>
+products.forEach(product=>{
 
-            <div class="rating">
-                ⭐ ${product.rating}/10
-            </div>
 
-            <button
-                class="product-button"
-                onclick="askAboutProduct('${product.name}')"
-            >
-                🤖 اسأل AI عنه
-            </button>
+box.innerHTML += `
 
-        `;
 
-        grid.appendChild(card);
+<div class="card">
 
-    });
+
+<div class="image">
+
+${product.icon}
+
+</div>
+
+
+<h3>
+
+${product.name}
+
+</h3>
+
+
+<p class="price">
+
+${product.price.toLocaleString()} د.ع
+
+</p>
+
+
+<p class="rating">
+
+⭐ ${product.rating}/10
+
+</p>
+
+
+</div>
+
+
+`;
+
+});
+
 
 }
 
 
-function filterProducts(category, button) {
 
-    document.querySelectorAll(".category")
-        .forEach(btn => btn.classList.remove("active"));
 
-    button.classList.add("active");
 
-    if (category === "all") {
 
-        displayProducts(products);
 
-        return;
+function smartChoose(){
 
-    }
 
-    const filtered = products.filter(
-        product => product.category === category
-    );
+const category =
+document.getElementById("category").value;
 
-    displayProducts(filtered);
+
+const budget =
+Number(document.getElementById("budget").value)*1000;
+
+
+const usage =
+document.getElementById("usage").value;
+
+
+
+let possible = products.filter(product=>{
+
+
+return product.category===category
+&& product.price <= budget;
+
+
+});
+
+
+
+
+if(possible.length===0){
+
+
+possible = products.filter(product=>{
+
+
+return product.category===category;
+
+
+});
+
 
 }
 
 
-function addMessage(text, type) {
 
-    const messages = document.getElementById("messages");
 
-    const div = document.createElement("div");
 
-    div.className =
-        type === "user"
-            ? "message user-message"
-            : "message ai-message";
+let best = possible[0];
 
-    div.innerHTML = `
 
-        <div class="avatar">
-            ${type === "user" ? "👤" : "🤖"}
-        </div>
 
-        <div>
-            <strong>
-                ${type === "user" ? "أنت" : "مساعد الشراء"}
-            </strong>
+possible.forEach(product=>{
 
-            <p>${text}</p>
-        </div>
 
-    `;
+if(product.use.includes(usage)
+&& product.rating > best.rating){
 
-    messages.appendChild(div);
 
-    messages.scrollTop = messages.scrollHeight;
+best=product;
+
 
 }
 
 
-function sendMessage() {
-
-    const input = document.getElementById("userInput");
-
-    const text = input.value.trim();
-
-    if (!text) return;
-
-    addMessage(text, "user");
-
-    input.value = "";
-
-    setTimeout(() => {
-
-        addMessage(
-            "وصلتني رسالتك 👍 حاليًا أنا بالنسخة التجريبية. بالخطوة القادمة راح أربطني بذكاء اصطناعي حقيقي حتى أجاوبك على أسئلتك بشكل طبيعي وأقارن لك المنتجات.",
-            "ai"
-        );
-
-    }, 700);
-
-}
+});
 
 
-function askSuggestion(text) {
-
-    document.getElementById("userInput").value = text;
-
-    sendMessage();
-
-}
 
 
-function askAboutProduct(productName) {
 
-    document.getElementById("ai").scrollIntoView({
-        behavior: "smooth"
-    });
 
-    setTimeout(() => {
+document.getElementById("result").innerHTML=`
 
-        document.getElementById("userInput").value =
-            `شنو رأيك بـ ${productName}؟ وهل يستاهل أشتريه؟`;
+🏆 اختيارنا إلك:
 
-        sendMessage();
+<br><br>
 
-    }, 500);
+<strong>
+
+${best.name}
+
+</strong>
+
+
+<br>
+
+💰 السعر:
+${best.price.toLocaleString()} د.ع
+
+
+<br>
+
+⭐ التقييم:
+${best.rating}/10
+
+
+<br><br>
+
+السبب:
+هذا المنتج مناسب لاستخدامك وميزانيتك.
+
+`;
+
+
 
 }
 
 
-function handleEnter(event) {
-
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-
-}
 
 
-function startVoice() {
 
-    if (!("webkitSpeechRecognition" in window)) {
-
-        alert("المتصفح ما يدعم الإدخال الصوتي حاليًا.");
-
-        return;
-
-    }
-
-    const recognition =
-        new webkitSpeechRecognition();
-
-    recognition.lang = "ar-IQ";
-
-    recognition.start();
-
-    recognition.onresult = function(event) {
-
-        const text =
-            event.results[0][0].transcript;
-
-        document.getElementById("userInput").value = text;
-
-    };
-
-}
-
-
-displayProducts(products);
+showProducts();
