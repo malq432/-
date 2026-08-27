@@ -1,3 +1,4 @@
+alert("اشتغل app.js");
 const products = [
 
 {
